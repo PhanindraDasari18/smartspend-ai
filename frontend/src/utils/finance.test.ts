@@ -1,0 +1,3 @@
+import {describe,it,expect} from 'vitest';import {summarize} from './finance';import type {Transaction} from '../types';
+const row=(transaction_type:Transaction['transaction_type'],amount:number):Transaction=>({occurred_on:'2026-10-01',description:'test',amount,transaction_type,category:'Food'});
+describe('financial summary',()=>{it('subtracts refunds from expense, not income',()=>expect(summarize([row('income',1000),row('expense',200),row('refund',50)])).toMatchObject({income:1000,gross:200,refunds:50,net:150,flow:850,savings:85}));it('avoids a savings rate when income is zero',()=>expect(summarize([row('expense',100)]).savings).toBeNull())});

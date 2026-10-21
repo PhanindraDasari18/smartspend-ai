@@ -1,0 +1,5 @@
+date,description,amount,type,category,payment_method
+2026-10-01,Monthly salary,15000,income,Salary,Bank Transfer
+2026-10-02,Swiggy order,320,expense,Food,UPI
+2026-10-03,Metro ticket,50,expense,Transport,UPI
+2026-10-04,Shopping refund,250,refund,Shopping,UPI

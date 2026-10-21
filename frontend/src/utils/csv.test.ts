@@ -1,0 +1,2 @@
+import {describe,it,expect} from 'vitest';import {parseCsv,safeCsv} from './csv';
+describe('CSV workflow utilities',()=>{it('parses and rejects invalid rows',()=>{const r=parseCsv('date,description,amount,type\n2026-10-01,Swiggy,20,expense\nwrong,Bad,-3,expense');expect(r.rows).toHaveLength(1);expect(r.errors).toHaveLength(1)});it('escapes spreadsheet formulas',()=>{const csv=safeCsv([{occurred_on:'2026-01-01',description:'=1+1',amount:1,transaction_type:'expense',category:'Food'}]);expect(csv).toContain("'=1+1")})});
