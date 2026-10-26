@@ -24,3 +24,9 @@ def test_anomaly_requires_history():
 
 def test_assistant_uses_calculated_values():
     assert "₹100.00" in answer("How much did I spend?", [tx(100)])
+
+def test_assistant_gives_data_based_spending_reduction_suggestion():
+    result = answer("What should I do to decrease spending?", [tx(200, category="Food"), tx(300, category="Shopping")])
+    assert "Shopping" in result
+    assert "₹300.00" in result
+    assert "monthly limit" in result

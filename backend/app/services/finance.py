@@ -39,6 +39,16 @@ def anomalies(transactions: list[Transaction]) -> list[dict]:
 
 def answer(question: str, transactions: list[Transaction]) -> str:
     q = question.lower(); summary = summarize(transactions); cats = category_totals(transactions)
+    if any(phrase in q for phrase in ("decrease", "reduce", "cut spending", "spend less", "lower spending", "save more", "spending less")):
+        leaders = sorted(((name, amount) for name, amount in cats.items() if amount > 0), key=lambda item: item[1], reverse=True)
+        if not leaders:
+            return "I can’t identify a spending area to reduce because there are no net expense records in the supplied period. Add transactions or choose a period with expenses, and I can point to the largest categories."
+        first_name, first_amount = leaders[0]
+        suggestion = f"Start by reviewing {first_name}, your largest net-spending category at ₹{first_amount:,.2f}. Check those transactions for optional or repeat purchases and consider setting a monthly limit."
+        if len(leaders) > 1:
+            second_name, second_amount = leaders[1]
+            suggestion += f" Then review {second_name} (₹{second_amount:,.2f})."
+        return suggestion + " I can’t tell which purchases are essential, so review them before changing your spending."
     if "most" in q or "highest" in q:
         if not cats: return "There are no expense records in the supplied period to compare."
         name, amount = max(cats.items(), key=lambda item: item[1])
